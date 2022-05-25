@@ -82,7 +82,7 @@ pipeline {
     stage ('SSL Checks') {
 		    steps {
 			sh 'pip install sslyze'
-			sh 'python3 -m sslyze 3.110.163.100:8080 --json_out sslyze-output.json'
+			sh 'python3 -m sslyze 3.110.163.100:8080 --json_out sslyze-output.json || true'
 			sh 'cat sslyze-output.json'
 		    }
 	    }
