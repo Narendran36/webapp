@@ -27,7 +27,7 @@ pipeline {
         sh 'wget "https://raw.githubusercontent.com/Narendran36/webapp/master/owasp-dependency-check.sh"'
         sh 'chmod +x owasp-dependency-check.sh'
         sh 'bash owasp-dependency-check.sh'
-        sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+        sh 'cat /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml'
       }
     }
     
@@ -39,7 +39,7 @@ pipeline {
     stage ('Deploy-to-Tomcat') {
       steps {
         sshagent(['tomcat']) {
-          sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@13.127.144.150:/prod/apache-tomcat-9.0.63/webapps/webapp.war'
+          sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@3.110.163.100:/prod/apache-tomcat-9.0.63/webapps/webapp.war'
         }
       }
     }
