@@ -70,5 +70,22 @@ pipeline {
       }
     }
     
+    stage ('Nikto Scan') {
+		    steps {
+			sh 'rm nikto-output.xml || true'
+			sh 'docker pull frapsoft/nikto:latest'
+			sh 'docker run --user $(id -u):$(id -g) --rm -v $(pwd):/report -i frapsoft/nikto:latest -h 3.110.163.100 -p 8080 -output /report/nikto-output.xml'
+			sh 'cat nikto-output.xml'   
+		    }
+	    }
+    
+    stage ('SSL Checks') {
+		    steps {
+			sh 'pip install sslyze'
+			sh 'python -m sslyze --regular 3.110.163.100:8080 --json_out sslyze-output.json'
+			sh 'cat sslyze-output.json'
+		    }
+	    }
+    
   }
 }
