@@ -54,6 +54,14 @@ pipeline {
       }
     }
     
+    stage ('Port Scan'){
+      steps {
+        sh 'rm nmap* || true'
+        sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 54.86.226.84'
+        sh 'cat nmap'
+      }
+    }
+    
     stage ('DAST') {
       steps {
         sshagent(['zap']) {
