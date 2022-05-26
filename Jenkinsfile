@@ -66,8 +66,7 @@ pipeline {
       steps {
 	sh 'rm zap-report.xml || true'
 	sh 'docker run --user root --rm -v $(pwd):/zap/wrk/:rw -t ictu/zap2docker-weekly zap-baseline.py -I -t http://65.2.63.134:8080/webapp/ -x zap-report.xml || true'
-        sh 'cat zap-report.xml' 
-        }
+        sh 'cat zap-report.xml'
       }
     }
     
