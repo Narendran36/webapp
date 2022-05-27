@@ -92,12 +92,12 @@ pipeline {
 			sh 'pip install requests'
 			sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/upload-results.py'
 			sh 'chmod +x upload-results.py'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file trufflehog --username admin --scanner "SSL Labs Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --username admin --scanner "Dependency Check Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file nmap --username admin --scanner "Nmap Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file zap-report.xml --username admin --scanner "ZAP Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file sslyze-output.json --username admin --scanner "SSL Labs Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key d2c8bbacea83c3e5ae7e818ef44d8b3a251878a5 --engagement_id 4 --result_file nikto-output.xml --username admin --scanner "Nikto"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file trufflehog --username admin --scanner "SSL Labs Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --username admin --scanner "Dependency Check Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file nmap --username admin --scanner "Nmap Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file zap-report.xml --username admin --scanner "ZAP Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file sslyze-output.json --username admin --scanner "SSL Labs Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 2d265a16f2d840a6dd0c53d1f0a5874944cbaf3a --engagement_id 4 --result_file nikto-output.xml --username admin --scanner "Nikto"'
 		    }
 	    }  
     
