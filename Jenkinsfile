@@ -34,7 +34,8 @@ pipeline {
     stage ('SAST') {
       steps {
         withSonarQubeEnv('sonar'){
-          sh 'mvn sonar:sonar'
+          mvn clean install
+	  mvn sonar:sonar -Dsonar.login=myAuthenticationToken
           sh 'cat target/sonar/report-task.txt'
         }
       }
