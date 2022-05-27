@@ -93,7 +93,7 @@ pipeline {
 			sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/upload-results.py'
 			sh 'chmod +x upload-results.py'
 			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file trufflehog --username admin --scanner "SSL Labs Scan"'
-			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml --username admin --scanner "Dependency Check Scan"'
+			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --username admin --scanner "Dependency Check Scan"'
 			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file nmap --username admin --scanner "Nmap Scan"'
 			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file sslyze-output.json --username admin --scanner "SSL Labs Scan"'
 			sh 'python upload-results.py --host 127.0.0.1:8000 --api_key 36b0b85239241be4f9140dadfe85d2b70425a8fd --engagement_id 4 --result_file nikto-output.xml --username admin'
