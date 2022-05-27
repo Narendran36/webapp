@@ -2,7 +2,7 @@ import argparse
 import requests
 from datetime import datetime
 
-#usage: python3 defectdojoPY.py --host $ --api_key $ --engagement_name $ --scanner $ --product_name $ --file_path $ 
+#usage: python3 upload-results.py --host $ --api_key $ --engagement_name $ --scanner $ --product_name $ --file_path $ 
 
 parser = argparse.ArgumentParser(description='CI/CD integration for DefectDojo')
 parser.add_argument('--host', help="DefectDojo Hostname", required=True)
