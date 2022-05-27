@@ -49,7 +49,7 @@ pipeline {
     stage ('Deploy-to-Tomcat') {
       steps {
         sshagent(['tomcat']) {
-          sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@65.2.63.134:/prod/apache-tomcat-9.0.63/webapps/webapp.war'
+          sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@43.204.95.245:/prod/apache-tomcat-9.0.63/webapps/webapp.war'
         }
       }
     }
@@ -57,7 +57,7 @@ pipeline {
     stage ('Port Scan'){
       steps {
         sh 'rm nmap* || true'
-        sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 65.2.63.134'
+        sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 43.204.95.245'
         sh 'cat nmap'
       }
     }
@@ -65,7 +65,7 @@ pipeline {
     stage ('DAST') {
       steps {
 	sh 'rm zap-report.xml || true'
-	sh 'docker run --user root --rm -v $(pwd):/zap/wrk/:rw -t ictu/zap2docker-weekly zap-baseline.py -I -t http://65.2.63.134:8080/webapp/ -x zap-report.xml || true'
+	sh 'docker run --user root --rm -v $(pwd):/zap/wrk/:rw -t ictu/zap2docker-weekly zap-baseline.py -I -t http://43.204.95.245:8080/webapp/ -x zap-report.xml || true'
         sh 'cat zap-report.xml'
       }
     }
@@ -74,7 +74,7 @@ pipeline {
 		    steps {
 			sh 'rm nikto-output.xml || true'
 			sh 'docker pull secfigo/nikto:latest'
-			sh 'docker run --user $(id -u):$(id -g) --rm -v $(pwd):/report -i secfigo/nikto:latest -h 65.2.63.134 -p 8080 -output /report/nikto-output.xml'
+			sh 'docker run --user $(id -u):$(id -g) --rm -v $(pwd):/report -i secfigo/nikto:latest -h 43.204.95.245 -p 8080 -output /report/nikto-output.xml'
 			sh 'cat nikto-output.xml'
 		    }
 	    }
@@ -82,7 +82,7 @@ pipeline {
     stage ('SSL Checks') {
 		    steps {
 			sh 'pip install sslyze'
-			sh 'python3 -m sslyze 65.2.63.134:8080 --json_out sslyze-output.json || true'
+			sh 'python3 -m sslyze 43.204.95.245:8080 --json_out sslyze-output.json || true'
 			sh 'cat sslyze-output.json'
 		    }
 	    }
