@@ -1,49 +1,82 @@
 import argparse
-import requests
 from datetime import datetime
+import json
+import os
+import requests
 
-#usage: python3 upload-results.py --host $ --api_key $ --engagement_name $ --scanner $ --product_name $ --file_path $ 
+def upload_results(host, user, api_key, scanner, result_file, engagement_id, verify=False): # set verify to False if ssl cert is self-signed
+	API_URL="http://"+host+"/api/v1";
+	IMPORT_SCAN_URL=API_URL+"/importscan/";
+	AUTH_TOKEN = "ApiKey " + user + ":" + api_key
 
-parser = argparse.ArgumentParser(description='CI/CD integration for DefectDojo')
-parser.add_argument('--host', help="DefectDojo Hostname", required=True)
-parser.add_argument('--api_key', help="API Key", required=True)
-parser.add_argument('--engagement_name', help="Engagement ID (optional)", required=True)
-parser.add_argument('--scanner', help="Type of scanner", required=True)
-parser.add_argument('--product_name', help="DefectDojo Product ID", required=False)
-parser.add_argument('--file_path', help="Path to the file to be uploaded including the file name inside the jenkins ", required=True)
-#parser.add_argument('--file_name', help="name of the file to be uploaded", required=True)
+	headers = dict()
+	json = dict()
+	files = dict()
+
+	# Prepare headers
+	# headers = {'Authorization': 'ApiKey dojo:3e24a3ee5af0305af20a5e6224052de3ed2f6859'}
+	headers['Authorization'] = AUTH_TOKEN
+	print (headers)
+
+	# Prepare JSON data to send to API
+	# json= {
+	#   "minimum_severity": "Low",
+	#   "scan_date": datetime.now().strftime("%Y-%m-%d"),
+	#   "verified": False,
+	#   "tags": "",
+	#   "active": False,
+	#   "engagement": "/api/v1/engagements/2/",
+	#   "lead":"/api/v1/users/1/",
+	#   "scan_type": "Bandit Scan"
+	# }
+	json['minimum_severity'] = "Low"
+	json['scan_date'] = datetime.now().strftime("%Y-%m-%d")
+	json['verified'] = False
+	json['tags'] = ""
+	json['active'] = False
+	json['engagement'] = "/api/v1/engagements/"+ engagement_id + "/"
+	json['lead'] ="/api/v1/users/"+ "1" + "/"
+	json['scan_type'] = scanner
+	print (json)
+
+	# Prepare file data to send to API
+	files['file'] = open(result_file)
+
+	# Make request to API
+	response = requests.post(IMPORT_SCAN_URL, headers=headers, files=files, data=json, verify=verify)
+     # print r.request.body
+     # print r.request.headers
+     # print r.status_code
+     # print r.text
+	return response.status_code
 
 
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='CI/CD integration for DefectDojo')
+	parser.add_argument('--host', help="DefectDojo Hostname", required=True)
+	parser.add_argument('--api_key', help="API Key", required=True)
+	parser.add_argument('--username', help="Username of Defect dojo user", required=True)
+	parser.add_argument('--engagement_id', help="Engagement ID (optional)", required=True)
+	parser.add_argument('--result_file', help="Scanner file", required=True)
+	parser.add_argument('--scanner', help="Type of scanner", required=True)
+	parser.add_argument('--product_id', help="DefectDojo Product ID", required=False)
+	parser.add_argument('--build_id', help="Reference to external build id", required=False)
 
-args = vars(parser.parse_args())
-host = args["host"]
-api_key = args["api_key"]
-product_name = args["product_name"]
-scanner = args["scanner"]
-engagement_id = args["engagement_name"]
-path = args["file_path"]
-#name = args["file_name"]
+        # Parse out arguments
+	args = vars(parser.parse_args())
+	host = args["host"]
+	api_key = args["api_key"]
+	user = args["username"]
+	product_id = args["product_id"]
+	result_file = args["result_file"]
+	scanner = args["scanner"]
+	engagement_id = args["engagement_id"]
+	build_id = args["build_id"]
 
-url = "http://"+host+"/api/v2/import-scan/"
+	# upload_results(self, host, user, api_key, scanner, result_file, engagement_id, verify=False): # set verify to False if ssl cert is self-signed
+	result = upload_results(host, user, api_key, scanner, result_file, engagement_id)
 
-
-
-payload={'verified': 'true',
-'tags': 'test',
-'scan_date' : datetime.now().strftime("%Y-%m-%d"),
-'scan_type': scanner,
-'minimum_severity': 'Info',
-'skip_duplicates': 'true',
-'close_old_findings': 'false',
-'product_name': product_name,
-'engagement_name': engagement_id }
-files=[
-  ('file ',(path,open(path,'rb'),'application/octet-stream'))
-]
-headers = {
-  'Authorization': 'Token '+ api_key
-}
-
-response = requests.request("POST", url, headers=headers, data=payload, files=files)
-
-print(response.text)
+	if result == 201 :
+		print ("Successfully uploaded the results to Defect Dojo")
+	else:
+		print ("Something went wrong, please debug " + str(result))
