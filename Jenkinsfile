@@ -92,12 +92,12 @@ pipeline {
 			sh 'pip install requests'
 			sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/upload-results.py'
 			sh 'chmod +x upload-results.py'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file trufflehog --username admin --scanner "SSL Labs Scan"'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --username admin --scanner "Dependency Check Scan"'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file nmap --username admin --scanner "Nmap Scan"'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file zap-report.xml --username admin --scanner "ZAP Scan"'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file sslyze-output.json --username admin --scanner "SSL Labs Scan"'
-			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_id 1 --result_file nikto-output.xml --username admin --scanner "Nikto"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file trufflehog --product_name "S3CUR1TY REPORT" --scanner "Trufflehog Scan"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --product_name "S3CUR1TY REPORT" --scanner "Dependency Check Scan"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file nmap --product_name "S3CUR1TY REPORT" --scanner "Nmap Scan"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file zap-report.xml --product_name "S3CUR1TY REPORT" --scanner "ZAP Scan"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file sslyze-output.json --product_name "S3CUR1TY REPORT" --scanner "SSL Labs Scan"'
+			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file nikto-output.xml --product_name "S3CUR1TY REPORT" --scanner "Nikto Scan"'
 		    }
 	    }  
     
