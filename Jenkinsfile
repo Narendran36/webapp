@@ -91,7 +91,7 @@ pipeline {
 		    steps {
 			sh 'pip install requests'
 			sh 'rm upload-results.py || true'
-			sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/upload-results.py'
+			sh 'wget https://raw.githubusercontent.com/Narendran36/webapp/master/upload-results.py'
 			sh 'chmod +x upload-results.py'
 			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file trufflehog --product_name "S3CUR1TY REPORT" --scanner "Trufflehog Scan"'
 			sh 'python3 upload-results.py --host 127.0.0.1:8080 --api_key 3612f193be594f6ae0e1791555189be9e2d35258 --engagement_name "security-engagement" --result_file /var/lib/jenkins/workspace/WebApp-CICD-Pipeline/odc-reports/dependency-check-report.xml --product_name "S3CUR1TY REPORT" --scanner "Dependency Check Scan"'
